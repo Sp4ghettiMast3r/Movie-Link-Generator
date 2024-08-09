@@ -5,7 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>IMDb ID to Player Link Generator</title>
 <style>
-  body{font-family:Arial,sans-serif;margin:0;padding:0;background-color:#f0f0f0}.container{max-width:600px;margin:50px auto;background-color:#fff;padding:20px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,.1)}h1{text-align:center;color:#333}form{text-align:center;margin-bottom:20px}input[type="text"],select{padding:8px;width:200px;font-size:16px}button{padding:8px 20px;background-color:#007bff;color:#fff;border:none;cursor:pointer;font-size:16px}button:hover{background-color:#0056b3}#outputContainer{margin-top:20px;display:none}.discord-link{position:fixed;bottom:20px;right:20px}.discord-link img{width:50px;height:50px;border-radius:50%;box-shadow:0 0 5px rgba(0,0,0,.3)}
+  body{font-family:Arial,sans-serif;margin:0;padding:0;background-color:#f0f0f0}
+  .container{max-width:600px;margin:50px auto;background-color:#fff;padding:20px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,.1)}
+  h1{text-align:center;color:#333}
+  form{text-align:center;margin-bottom:20px}
+  input[type="text"],select{padding:8px;width:200px;font-size:16px}
+  button{padding:8px 20px;background-color:#007bff;color:#fff;border:none;cursor:pointer;font-size:16px}
+  button:hover{background-color:#0056b3}
+  #outputContainer{margin-top:20px;display:none}
+  .discord-link{position:fixed;bottom:20px;right:20px}
+  .discord-link img{width:50px;height:50px;border-radius:50%;box-shadow:0 0 5px rgba(0,0,0,.3)}
 </style>
 </head>
 <body>
@@ -29,33 +38,33 @@
   <img id="discordIcon" src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-o5mluhz2.png" alt="Discord Icon">
 </a>
 <script>
-document['addEventListener']('DOMContentLoaded', function() {
-  var discordButton = document['getElementById']('discordButton');
+document.addEventListener('DOMContentLoaded', function() {
+  var discordButton = document.getElementById('discordButton');
   if (discordButton) {
-    discordButton['style']['display'] = 'block';
+    discordButton.style.display = 'block';
   }
 });
 
-document['getElementById']('imdbForm')['addEventListener']('submit', function(event) {
-  event['preventDefault']();
+document.getElementById('imdbForm').addEventListener('submit', function(event) {
+  event.preventDefault();
   
-  var input = document['getElementById']('imdbIdInput')['value']['trim']();
-  var mediaType = document['getElementById']('mediaType')['value'];
+  var input = document.getElementById('imdbIdInput').value.trim();
+  var mediaType = document.getElementById('mediaType').value;
   
   var imdbId = extractImdbId(input);
   
   if (imdbId && (mediaType === 'movie' || mediaType === 'tv')) {
-    var playerLink = 'https://vidsrc.to/embed/' + (mediaType === 'movie' ? 'movie' : 'tv') + '/' + imdbId;
-    document['getElementById']('generatedLink')['innerHTML'] = '<a href="' + playerLink + '" target="_blank">' + playerLink + '</a>';
-    document['getElementById']('outputContainer')['style']['display'] = 'block';
+    var playerLink = 'https://vidsrc.me/embed/' + (mediaType === 'movie' ? 'movie?imdb=' : 'tv?imdb=') + imdbId;
+    document.getElementById('generatedLink').innerHTML = '<a href="' + playerLink + '" target="_blank">' + playerLink + '</a>';
+    document.getElementById('outputContainer').style.display = 'block';
   } else {
-    alert('Please enter a valid IMDb ID or IMDb link.');
+    document.getElementById('generatedLink').innerHTML = 'Please enter a valid IMDb ID or IMDb link.';
   }
 });
 
 function extractImdbId(input) {
-  var imdbRegex = /(?:tt\d{7,8})/;
-  var match = input['match'](imdbRegex);
+  var imdbRegex = /tt\d{7,8}/;
+  var match = input.match(imdbRegex);
   if (match) {
     return match[0];
   }
